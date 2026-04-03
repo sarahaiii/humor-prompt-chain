@@ -7,13 +7,37 @@ export default function NewFlavorPage() {
 
         const supabase = await createClient();
 
-        const slug = formData.get("slug")?.toString() ?? "";
-        const description = formData.get("description")?.toString() ?? "";
+        const slug = formData.get("slug")?.toString().trim() ?? "";
+        const description = formData.get("description")?.toString().trim() ?? "";
 
-        await supabase.from("humor_flavors").insert({
+        if (!slug) {
+            throw new Error("Slug is required.");
+        }
+
+        const {
+            data: { user },
+            error: userError,
+        } = await supabase.auth.getUser();
+
+        if (userError || !user) {
+            throw new Error("You must be signed in to create a humor flavor.");
+        }
+
+        const now = new Date().toISOString();
+
+        const { error } = await supabase.from("humor_flavors").insert({
             slug,
             description,
+            created_by_user_id: user.id,
+            modified_by_user_id: user.id,
+            created_datetime_utc: now,
+            modified_datetime_utc: now,
         });
+
+        if (error) {
+            console.error("Create flavor error:", error);
+            throw new Error(error.message);
+        }
 
         redirect("/admin/flavors");
     }
@@ -34,8 +58,9 @@ export default function NewFlavorPage() {
                         <label className="mb-2 block text-sm font-medium">Slug</label>
                         <input
                             name="slug"
-                            placeholder="sarcastic-office"
+                            placeholder="main-character-energy"
                             className="w-full rounded-xl border px-4 py-3"
+                            required
                         />
                     </div>
 
@@ -49,7 +74,10 @@ export default function NewFlavorPage() {
                         />
                     </div>
 
-                    <button className="rounded-full bg-indigo-600 px-5 py-3 font-semibold text-white">
+                    <button
+                        type="submit"
+                        className="rounded-full bg-indigo-600 px-5 py-3 font-semibold text-white"
+                    >
                         Create Flavor
                     </button>
                 </form>

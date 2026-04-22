@@ -23,10 +23,10 @@ export default async function EditFlavorPage({
 
     if (error || !data) {
         return (
-            <main className="min-h-screen px-6 py-10 text-white">
+            <main className="min-h-screen px-6 py-10 text-[#1a3a5c]">
                 <div className="mx-auto max-w-3xl">
-                    <h1 className="text-4xl font-bold">Edit Flavor</h1>
-                    <p className="mt-4 text-red-300">
+                    <h1 className="text-4xl font-bold text-[#0c1a2e]">Edit Flavor</h1>
+                    <p className="mt-4 text-red-500">
                         Error loading flavor: {error?.message ?? "Not found"}
                     </p>
                 </div>
@@ -56,23 +56,23 @@ export default async function EditFlavorPage({
     }
 
     return (
-        <main className="min-h-screen px-6 py-10 text-white">
+        <main className="min-h-screen px-6 py-10 text-[#1a3a5c]">
             <div className="mx-auto max-w-3xl">
-                <h1 className="text-4xl font-bold">Edit Humor Flavor</h1>
-                <p className="mt-3 text-slate-300">
+                <h1 className="text-4xl font-bold text-[#0c1a2e]">Edit Humor Flavor</h1>
+                <p className="mt-3 text-[#6a9cbf]">
                     Update this humor flavor.
                 </p>
 
                 <form
                     action={updateFlavor}
-                    className="mt-8 space-y-5 rounded-2xl border border-indigo-400/20 bg-white p-6 text-gray-900"
+                    className="mt-8 space-y-5 rounded-2xl border border-[rgba(120,175,255,0.4)] bg-white/75 p-6"
                 >
                     <div>
                         <label className="mb-2 block text-sm font-medium">Slug</label>
                         <input
                             name="slug"
                             defaultValue={flavor.slug ?? ""}
-                            className="w-full rounded-xl border px-4 py-3"
+                            className="w-full rounded-xl border border-[rgba(120,175,255,0.4)] px-4 py-3"
                         />
                     </div>
 
@@ -82,11 +82,11 @@ export default async function EditFlavorPage({
                             name="description"
                             rows={5}
                             defaultValue={flavor.description ?? ""}
-                            className="w-full rounded-xl border px-4 py-3"
+                            className="w-full rounded-xl border border-[rgba(120,175,255,0.4)] px-4 py-3"
                         />
                     </div>
 
-                    <button className="rounded-full bg-indigo-600 px-5 py-3 font-semibold text-white">
+                    <button className="rounded-full bg-[#60a5fa] px-5 py-3 font-semibold text-white hover:bg-[#3b82f6]">
                         Save Changes
                     </button>
                 </form>

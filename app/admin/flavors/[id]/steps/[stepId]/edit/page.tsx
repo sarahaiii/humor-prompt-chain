@@ -29,7 +29,7 @@ export default async function EditStepPage({
 
     if (!step) {
         return (
-            <main className="min-h-screen px-6 py-10 text-white">
+            <main className="min-h-screen px-6 py-10 text-[#1a3a5c]">
                 Step not found
             </main>
         );
@@ -61,16 +61,16 @@ export default async function EditStepPage({
     const row = step as Step;
 
     return (
-        <main className="min-h-screen px-6 py-10 text-white">
+        <main className="min-h-screen px-6 py-10 text-[#1a3a5c]">
             <div className="mx-auto max-w-3xl">
-                <h1 className="text-4xl font-bold">Edit Step</h1>
-                <p className="mt-3 text-slate-300">
+                <h1 className="text-4xl font-bold text-[#0c1a2e]">Edit Step</h1>
+                <p className="mt-3 text-[#6a9cbf]">
                     Update this humor flavor step.
                 </p>
 
                 <form
                     action={updateStep}
-                    className="mt-8 space-y-5 rounded-2xl border border-indigo-400/20 bg-white p-6 text-gray-900"
+                    className="mt-8 space-y-5 rounded-2xl border border-[rgba(120,175,255,0.4)] bg-white/75 p-6"
                 >
                     <div>
                         <label className="mb-2 block text-sm font-medium">Order</label>
@@ -78,7 +78,7 @@ export default async function EditStepPage({
                             name="order_by"
                             type="number"
                             defaultValue={row.order_by ?? 1}
-                            className="w-full rounded-xl border px-4 py-3"
+                            className="w-full rounded-xl border border-[rgba(120,175,255,0.4)] px-4 py-3"
                         />
                     </div>
 
@@ -87,7 +87,7 @@ export default async function EditStepPage({
                         <input
                             name="description"
                             defaultValue={row.description ?? ""}
-                            className="w-full rounded-xl border px-4 py-3"
+                            className="w-full rounded-xl border border-[rgba(120,175,255,0.4)] px-4 py-3"
                         />
                     </div>
 
@@ -97,7 +97,7 @@ export default async function EditStepPage({
                             name="llm_system_prompt"
                             rows={6}
                             defaultValue={row.llm_system_prompt ?? ""}
-                            className="w-full rounded-xl border px-4 py-3"
+                            className="w-full rounded-xl border border-[rgba(120,175,255,0.4)] px-4 py-3"
                         />
                     </div>
 
@@ -107,11 +107,11 @@ export default async function EditStepPage({
                             name="llm_user_prompt"
                             rows={6}
                             defaultValue={row.llm_user_prompt ?? ""}
-                            className="w-full rounded-xl border px-4 py-3"
+                            className="w-full rounded-xl border border-[rgba(120,175,255,0.4)] px-4 py-3"
                         />
                     </div>
 
-                    <button className="rounded-full bg-indigo-600 px-5 py-3 font-semibold text-white">
+                    <button className="rounded-full bg-[#60a5fa] px-5 py-3 font-semibold text-white hover:bg-[#3b82f6]">
                         Save Changes
                     </button>
                 </form>

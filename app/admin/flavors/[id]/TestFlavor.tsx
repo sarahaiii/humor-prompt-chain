@@ -53,25 +53,25 @@ export default function TestFlavor({ flavorId }: { flavorId: number }) {
     }
 
     return (
-        <div className="mt-10 rounded-xl border border-slate-700 bg-white p-6 text-slate-900">
+        <div className="mt-10 rounded-xl border border-[rgba(120,175,255,0.4)] bg-white/75 p-6 text-[#1a3a5c]">
             <div className="flex items-center justify-between gap-4">
                 <div>
-                    <h2 className="text-lg font-semibold">Test Flavor</h2>
-                    <p className="mt-1 text-sm text-slate-500">
+                    <h2 className="text-lg font-semibold text-[#0c1a2e]">Test Flavor</h2>
+                    <p className="mt-1 text-sm text-[#6a9cbf]">
                         Run prompt chain and preview captions
                     </p>
                 </div>
 
                 <button
                     onClick={runTest}
-                    className="rounded-lg bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-indigo-700"
+                    className="rounded-lg bg-[#60a5fa] px-4 py-2 text-sm font-medium text-white hover:bg-[#3b82f6]"
                 >
                     {loading ? "Generating..." : "Generate captions"}
                 </button>
             </div>
 
             <div className="mt-4">
-                <label className="mb-2 block text-sm font-medium text-slate-700">
+                <label className="mb-2 block text-sm font-medium text-[#1a3a5c]">
                     Test Image ID
                 </label>
                 <input
@@ -79,15 +79,15 @@ export default function TestFlavor({ flavorId }: { flavorId: number }) {
                     value={imageId}
                     onChange={(e) => setImageId(e.target.value)}
                     placeholder="Optional: leave blank to use your most recent image"
-                    className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm"
+                    className="w-full rounded-lg border border-[rgba(120,175,255,0.4)] px-3 py-2 text-sm"
                 />
-                <p className="mt-2 text-xs text-slate-500">
+                <p className="mt-2 text-xs text-[#6a9cbf]">
                     Leave blank to automatically test with your most recently uploaded image.
                 </p>
             </div>
 
             {imageIdUsed !== null && (
-                <div className="mt-4 rounded-lg border border-slate-200 bg-slate-50 p-3 text-sm text-slate-700">
+                <div className="mt-4 rounded-lg border border-[rgba(120,175,255,0.4)] bg-blue-50 p-3 text-sm text-[#1a3a5c]">
                     Used image ID: <span className="font-semibold">{imageIdUsed}</span>
                 </div>
             )}
@@ -100,14 +100,14 @@ export default function TestFlavor({ flavorId }: { flavorId: number }) {
 
             {captions.length > 0 && (
                 <div className="mt-6 space-y-3">
-                    <p className="text-xs font-medium uppercase tracking-wide text-slate-400">
+                    <p className="text-xs font-medium uppercase tracking-wide text-[#6a9cbf]">
                         Generated Captions
                     </p>
 
                     {captions.map((caption, i) => (
                         <div
                             key={i}
-                            className="rounded-lg border border-slate-200 bg-slate-50 p-3 text-sm"
+                            className="rounded-lg border border-[rgba(120,175,255,0.4)] bg-blue-50/50 p-3 text-sm"
                         >
                             {caption}
                         </div>

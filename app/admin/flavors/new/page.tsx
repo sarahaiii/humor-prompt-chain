@@ -43,23 +43,23 @@ export default function NewFlavorPage() {
     }
 
     return (
-        <main className="min-h-screen px-6 py-10 text-white">
+        <main className="min-h-screen px-6 py-10 text-[#1a3a5c]">
             <div className="mx-auto max-w-3xl">
-                <h1 className="text-4xl font-bold">New Humor Flavor</h1>
-                <p className="mt-3 text-slate-300">
+                <h1 className="text-4xl font-bold text-[#0c1a2e]">New Humor Flavor</h1>
+                <p className="mt-3 text-[#6a9cbf]">
                     Create a new humor flavor.
                 </p>
 
                 <form
                     action={createFlavor}
-                    className="mt-8 space-y-5 rounded-2xl border border-indigo-400/20 bg-white p-6 text-gray-900"
+                    className="mt-8 space-y-5 rounded-2xl border border-[rgba(120,175,255,0.4)] bg-white/75 p-6"
                 >
                     <div>
                         <label className="mb-2 block text-sm font-medium">Slug</label>
                         <input
                             name="slug"
                             placeholder="main-character-energy"
-                            className="w-full rounded-xl border px-4 py-3"
+                            className="w-full rounded-xl border border-[rgba(120,175,255,0.4)] px-4 py-3"
                             required
                         />
                     </div>
@@ -70,13 +70,13 @@ export default function NewFlavorPage() {
                             name="description"
                             rows={5}
                             placeholder="Short explanation of this humor flavor"
-                            className="w-full rounded-xl border px-4 py-3"
+                            className="w-full rounded-xl border border-[rgba(120,175,255,0.4)] px-4 py-3"
                         />
                     </div>
 
                     <button
                         type="submit"
-                        className="rounded-full bg-indigo-600 px-5 py-3 font-semibold text-white"
+                        className="rounded-full bg-[#60a5fa] px-5 py-3 font-semibold text-white hover:bg-[#3b82f6]"
                     >
                         Create Flavor
                     </button>

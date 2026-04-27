@@ -56,17 +56,7 @@ export async function POST(request: Request) {
 
         const supabase = await createClient();
 
-        const {
-            data: { session },
-            error: sessionError,
-        } = await supabase.auth.getSession();
-
-        if (sessionError || !session?.access_token) {
-            return NextResponse.json(
-                { error: "Not logged in / missing session" },
-                { status: 401 }
-            );
-        }
+        const { data: { session } } = await supabase.auth.getSession();
 
         const { data: steps, error: stepsError } = await supabase
             .from("humor_flavor_steps")
@@ -133,6 +123,13 @@ export async function POST(request: Request) {
             }
 
             resolvedImageId = (latestImage as ImageRow).id;
+        }
+
+        if (!session?.access_token) {
+            return NextResponse.json(
+                { error: "Sign in to use Test Flavor — the almostcrackd.ai API requires authentication." },
+                { status: 401 }
+            );
         }
 
         const response = await fetch(

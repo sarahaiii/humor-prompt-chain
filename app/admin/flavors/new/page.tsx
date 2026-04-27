@@ -14,22 +14,13 @@ export default function NewFlavorPage() {
             throw new Error("Slug is required.");
         }
 
-        const {
-            data: { user },
-            error: userError,
-        } = await supabase.auth.getUser();
-
-        if (userError || !user) {
-            throw new Error("You must be signed in to create a humor flavor.");
-        }
-
         const now = new Date().toISOString();
 
         const { error } = await supabase.from("humor_flavors").insert({
             slug,
             description,
-            created_by_user_id: user.id,
-            modified_by_user_id: user.id,
+            created_by_user_id: null,
+            modified_by_user_id: null,
             created_datetime_utc: now,
             modified_datetime_utc: now,
         });

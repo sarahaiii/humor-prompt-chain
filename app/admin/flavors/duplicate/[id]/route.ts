@@ -8,9 +8,6 @@ export async function GET(
     const { id } = await params;
     const supabase = await createClient();
 
-    const { data: { user } } = await supabase.auth.getUser();
-    if (!user) return NextResponse.redirect(new URL("/login", request.url));
-
     const flavorId = Number(id);
 
     // Fetch the original flavor
@@ -48,8 +45,8 @@ export async function GET(
         .insert({
             slug: newSlug,
             description: original.description ?? null,
-            created_by_user_id: user.id,
-            modified_by_user_id: user.id,
+            created_by_user_id: null,
+            modified_by_user_id: null,
             created_datetime_utc: now,
             modified_datetime_utc: now,
         })

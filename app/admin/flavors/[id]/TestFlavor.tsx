@@ -6,12 +6,16 @@ export default function TestFlavor({ flavorId }: { flavorId: number }) {
     const [captions, setCaptions] = useState<string[]>([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
+    const [errorDetails, setErrorDetails] = useState<string>("");
+    const [rawResponse, setRawResponse] = useState<string>("");
     const [imageId, setImageId] = useState("");
     const [imageIdUsed, setImageIdUsed] = useState<number | null>(null);
 
     async function runTest() {
         setLoading(true);
         setError("");
+        setErrorDetails("");
+        setRawResponse("");
         setCaptions([]);
         setImageIdUsed(null);
 
@@ -31,6 +35,9 @@ export default function TestFlavor({ flavorId }: { flavorId: number }) {
 
             if (!res.ok) {
                 setError(data.error || "Failed to generate captions");
+                if (data.details) {
+                    setErrorDetails(JSON.stringify(data.details, null, 2));
+                }
                 setLoading(false);
                 return;
             }
@@ -42,9 +49,8 @@ export default function TestFlavor({ flavorId }: { flavorId: number }) {
                 : [];
 
             setCaptions(nextCaptions);
-            setImageIdUsed(
-                typeof data.imageIdUsed === "number" ? data.imageIdUsed : null
-            );
+            setImageIdUsed(typeof data.imageIdUsed === "number" ? data.imageIdUsed : null);
+            if (data.raw) setRawResponse(JSON.stringify(data.raw, null, 2));
         } catch (err) {
             setError(err instanceof Error ? err.message : "Unknown client error");
         }
@@ -95,6 +101,11 @@ export default function TestFlavor({ flavorId }: { flavorId: number }) {
             {error && (
                 <div className="mt-5 rounded-lg border border-red-200 bg-red-50 p-4 text-sm text-red-700">
                     <div className="font-medium">{error}</div>
+                    {errorDetails && (
+                        <pre className="mt-2 overflow-x-auto whitespace-pre-wrap text-xs opacity-75">
+                            {errorDetails}
+                        </pre>
+                    )}
                 </div>
             )}
 
@@ -112,6 +123,17 @@ export default function TestFlavor({ flavorId }: { flavorId: number }) {
                             {caption}
                         </div>
                     ))}
+
+                    {rawResponse && (
+                        <details className="mt-4">
+                            <summary className="cursor-pointer text-xs text-[#6a9cbf] hover:text-[#1a3a5c]">
+                                Raw API response
+                            </summary>
+                            <pre className="mt-2 overflow-x-auto rounded-lg bg-blue-50 p-3 text-xs text-[#1a3a5c]">
+                                {rawResponse}
+                            </pre>
+                        </details>
+                    )}
                 </div>
             )}
         </div>

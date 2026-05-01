@@ -1,14 +1,6 @@
 import { createClient } from "@/lib/supabase/server";
 import { NextResponse } from "next/server";
 
-type StepRow = {
-    order_by?: number | null;
-    llm_system_prompt?: string | null;
-    llm_user_prompt?: string | null;
-    llm_model_id?: number | null;
-    llm_temperature?: number | null;
-};
-
 type CaptionItem = {
     content?: string;
 };
@@ -24,6 +16,13 @@ type ApiResult =
 }
     | {
     rawText: string;
+};
+
+type StepRow = {
+    llm_system_prompt?: string | null;
+    llm_user_prompt?: string | null;
+    llm_model_id?: number | null;
+    llm_temperature?: number | null;
 };
 
 type ImageRow = {
@@ -56,7 +55,10 @@ export async function POST(request: Request) {
 
         const supabase = await createClient();
 
-        const { data: { session } } = await supabase.auth.getSession();
+        const { data: { session }, error: sessionError } = await supabase.auth.getSession();
+        if (sessionError || !session?.access_token) {
+            return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+        }
 
         const { data: steps, error: stepsError } = await supabase
             .from("humor_flavor_steps")
@@ -75,12 +77,10 @@ export async function POST(request: Request) {
             );
         }
 
-        const rows = steps as StepRow[];
-
-        const chain = rows.map((step) => ({
-            model_id: step.llm_model_id,
-            system_prompt: step.llm_system_prompt ?? "",
-            user_prompt: step.llm_user_prompt ?? "",
+        const chain = (steps as StepRow[]).map((step) => ({
+            systemPrompt: step.llm_system_prompt ?? "",
+            userPrompt: step.llm_user_prompt ?? "",
+            modelId: step.llm_model_id ?? null,
             temperature: step.llm_temperature ?? 0.7,
         }));
 
@@ -123,13 +123,6 @@ export async function POST(request: Request) {
             }
 
             resolvedImageId = (latestImage as ImageRow).id;
-        }
-
-        if (!session?.access_token) {
-            return NextResponse.json(
-                { error: "Sign in to use Test Flavor — the almostcrackd.ai API requires authentication." },
-                { status: 401 }
-            );
         }
 
         const response = await fetch(
@@ -196,7 +189,7 @@ export async function POST(request: Request) {
 
         return NextResponse.json({
             ok: true,
-            captions,
+            captions: captions.slice(0, 5),
             raw: result,
             imageIdUsed: resolvedImageId,
         });

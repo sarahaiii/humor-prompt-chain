@@ -45,8 +45,6 @@ export async function GET(
         .insert({
             slug: newSlug,
             description: original.description ?? null,
-            created_by_user_id: null,
-            modified_by_user_id: null,
             created_datetime_utc: now,
             modified_datetime_utc: now,
         })

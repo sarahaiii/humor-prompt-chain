@@ -40,6 +40,7 @@ export default async function EditFlavorPage({
         "use server";
 
         const supabase = await createClient();
+        const { data: { user } } = await supabase.auth.getUser();
 
         const slug = formData.get("slug")?.toString() ?? "";
         const description = formData.get("description")?.toString() ?? "";
@@ -49,6 +50,8 @@ export default async function EditFlavorPage({
             .update({
                 slug,
                 description,
+                modified_datetime_utc: new Date().toISOString(),
+                modified_by_user_id: user?.id,
             })
             .eq("id", Number(id));
 
